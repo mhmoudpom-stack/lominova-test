@@ -1,0 +1,633 @@
+/* ============================================================
+   Luminova Edu — Master Stylesheet
+   Supports: Dark/Light mode, RTL (Arabic) / LTR (English),
+             Desktop & Mobile responsive layout.
+   ============================================================ */
+
+/* ============================================================
+   0. GLOBAL ARABIC TYPOGRAPHY SAFETY NET
+      Prevents any element from splitting Arabic words mid-character.
+      word-break:normal = only break at spaces (correct Arabic behavior).
+      overflow-wrap:anywhere = allow URL/long-token wrap as last resort.
+   ============================================================ */
+* {
+    -webkit-hyphens: none;
+    hyphens: none;
+}
+[dir="rtl"] * {
+    word-break: normal !important;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+/* ---- Google Font ---- */
+/* (Already loaded via <link> in index.html) */
+
+/* ============================================================
+   1. BASE / BODY
+   ============================================================ */
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #ffffff;
+    color: #09090b;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    background-image: none;
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+
+/* Ambient Canvas Glows */
+.ambient-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+html.dark body {
+    background-color: #09090b; /* zinc-950 */
+    color: #fafafa;
+}
+
+html.dark .ambient-glow::before {
+    content: '';
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 80% 20%, rgba(244, 63, 94, 0.1) 0%, transparent 50%); /* Rose-500 Glow top-right */
+    filter: blur(120px);
+    pointer-events: none;
+}
+
+html.dark .ambient-glow::after {
+    content: '';
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%); /* Indigo-500 Glow bottom-left */
+    filter: blur(120px);
+    pointer-events: none;
+}
+
+/* ============================================================
+   2. GLASS CARD (V2 VIBRANT)
+   ============================================================ */
+.glass-card {
+    background: rgba(250, 250, 250, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(228, 228, 231, 0.5);
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.06);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+html.dark .glass-card {
+    background: rgba(255, 255, 255, 0.02); /* Aurora Glow frosted glass */
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-card:hover {
+    transform: translateY(-8px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+html.dark .glass-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(251, 113, 133, 0.3); /* Rose-400 highlight */
+    box-shadow: 0 8px 30px rgba(244, 63, 94, 0.1), 0 20px 40px rgba(0,0,0,0.4);
+}
+
+/* Premium Interactive Attachment Card */
+.interactive-glass-card {
+    background: rgba(250, 250, 250, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(228, 228, 231, 0.5);
+    border-radius: 16px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+html.dark .interactive-glass-card {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.interactive-glass-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-color: rgba(6, 182, 212, 0.4);
+}
+
+html.dark .interactive-glass-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   3. VIP GLOW
+   ============================================================ */
+.vip-glow {
+    box-shadow: 0 0 8px rgba(161, 161, 170, 0.25);
+    border-color: rgba(161, 161, 170, 0.3);
+}
+
+/* ============================================================
+   4. FOUNDER CARD (hardcoded protecetd entity)
+   ============================================================ */
+.founder-card {
+    background: linear-gradient(135deg, #18181b, #09090b);
+    border: 1px solid rgba(161, 161, 170, 0.3);
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    position: relative;
+    overflow: hidden;
+}
+.founder-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;          /* physical left — decorative only, OK here */
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(161,161,170,.06) 0%, transparent 60%);
+    animation: pulse-glow 5s ease-in-out infinite;
+    pointer-events: none;
+}
+@keyframes pulse-glow {
+    0%   { transform: scale(0.9); opacity: 0.5; }
+    50%  { transform: scale(1.1); opacity: 1;   }
+    100% { transform: scale(0.9); opacity: 0.5; }
+}
+
+/* ============================================================
+   5. SMART TEXT (Read More / Read Less)
+   ============================================================ */
+.smart-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+.smart-text.collapsed {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    max-height: 4.5em;
+}
+.smart-text.expanded {
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    max-height: 2000px;
+}
+
+/* ============================================================
+   6. SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar               { width: 6px; }
+::-webkit-scrollbar-track         { background: transparent; }
+::-webkit-scrollbar-thumb         { background: rgba(156,163,175,.5); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover   { background: rgba(107,114,128,.8); }
+
+/* ============================================================
+   7. MEDIA EMBED CONTAINER (16:9 responsive)
+   ============================================================ */
+.media-container {
+    position: relative;
+    padding-bottom: 56.25%;   /* 16:9 */
+    height: 0;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+}
+.media-container iframe,
+.media-container video,
+.media-container img {
+    position: absolute;
+    top: 0;
+    left: 0;           /* Always physical-left inside the container box */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+    border: none;
+}
+
+/* ============================================================
+   8. FADE-IN ANIMATION
+   ============================================================ */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0);   }
+}
+.animate-fade-in {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+.lmv-loading-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    z-index: 99999;
+    background: linear-gradient(90deg, #a1a1aa 0%, #71717a 50%, #a1a1aa 100%);
+    background-size: 200% auto;
+    animation: shimmer 1.2s linear infinite;
+}
+
+/* ============================================================
+   9. GLOBAL FLUID IMAGES / MEDIA
+      (Allow embedded media to be fluid without breaking
+       things inside .media-container which uses absolute pos.)
+   ============================================================ */
+img:not(.media-container img),
+video:not(.media-container video) {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ============================================================
+   10. RTL / LTR LOGICAL OVERRIDES
+       Use CSS logical properties so layout flips automatically.
+   ============================================================ */
+
+/* Timeline border: follows reading direction */
+[dir="rtl"] .border-s {
+    border-left: none;
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+[dir="ltr"] .border-s {
+    border-right: none;
+    border-left-width: 1px;
+    border-left-style: solid;
+}
+
+/* RTL: news/quiz accent border on correct side */
+[dir="rtl"] .border-l-4 {
+    border-left: none;
+    border-right: 4px solid;
+}
+[dir="rtl"] .border-r-4 {
+    border-right: none;
+    border-left: 4px solid;
+}
+
+/* RTL: timeline dot — Tailwind .-start-3 already handles this for inline-start
+   but adding explicit fallback */
+[dir="rtl"] .\-start-3 {
+    right: -0.75rem;
+    left: auto;
+}
+
+/* RTL: quiz option letter (A/B/C/D) spacing */
+[dir="rtl"] .mr-4.ml-4 { margin-right: 0; margin-left: 1rem; }
+
+/* ============================================================
+   11. MOBILE RESPONSIVENESS  (≤ 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+
+    /* Guarantee no horizontal scroll */
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    /* Prevent text / long URLs from breaking container.
+       CRITICAL Arabic rule: word-break must stay 'normal' so Arabic
+       words are NEVER split mid-character. Only URL-like tokens that
+       have no natural break point may wrap via overflow-wrap:anywhere. */
+    p, h1, h2, h3, h4, span, label, td, th, li {
+        overflow-wrap: anywhere;   /* wraps only when no other option */
+        word-break: normal;        /* words (Arabic or otherwise) never split mid-char */
+        white-space: normal;       /* always allow inter-word wrapping */
+    }
+
+    /* ── Grids collapse to one column ── */
+    .grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* ── Glass card tighter padding ── */
+    .glass-card {
+        padding: 1rem !important;
+        border-radius: 1rem !important;
+    }
+
+    /* ── Nav bar ── */
+    nav.glass-card {
+        padding: 0.75rem 1rem !important;
+        /* Space-between: pushes brand to inline-start, tools to inline-end.
+           RTL auto-flips → brand right, tools left.
+           LTR keeps → brand left, tools right. */
+        justify-content: space-between !important;
+    }
+
+    /* ── Standalone iframes outside .media-container ── */
+    iframe:not(.media-container > iframe) {
+        width: 100% !important;
+        max-height: 220px !important;
+        aspect-ratio: 16 / 9;
+        border: none;
+    }
+
+    /* ── Modals: 95 % screen width ──
+       Targets the inner white/dark panel that sits inside the
+       fixed overlay. Works with inline bg-white / dark:bg-gray-900. */
+    .fixed.inset-0 > div {
+        width: 95vw !important;
+        max-width: 95vw !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding: 1rem !important;
+        max-height: 92vh !important;
+        overflow-y: auto !important;
+        border-radius: 1rem !important;
+    }
+
+    /* Modal header (avatar row) → vertical stack */
+    .fixed.inset-0 .flex.gap-6 {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        text-align: center !important;
+    }
+
+    /* ── Timeline indentation (RTL-safe) ── */
+    /* Reduce inline margins so content isn't squeezed */
+    .timeline-feed,
+    .space-y-6.relative {
+        margin-inline: 0 !important;
+        padding-inline-start: 0.5rem !important;
+        padding-inline-end: 0 !important;
+    }
+    .ms-6 {
+        margin-inline-start: 0.75rem !important;
+    }
+
+    /* ── Academic tabs ── */
+    .flex.border-b > button {
+        padding: 0.65rem 0.5rem !important;
+        font-size: 0.85rem !important;
+        flex: 1 1 0 !important;
+        text-align: center !important;
+    }
+
+    /* ── flex-row layouts become column on mobile ── */
+    /* Covers md:flex-row used in Academic page two-panel */
+    .flex-col.md\:flex-row,
+    .md\:flex-row {
+        flex-direction: column !important;
+    }
+
+    /* ── CMS sidebar + panel → stacked ── */
+    .xl\:w-1\/4,
+    .xl\:w-3\/4 {
+        width: 100% !important;
+    }
+
+    /* ── Button rows: wrap so they don't overlap text ── */
+    .flex.gap-4 {
+        flex-wrap: wrap;
+    }
+
+    /* ── Contributor chip that floats "-top-6" above quiz card ──
+       On mobile make it static so it doesn't escape the card. */
+    .\-top-6 {
+        position: static !important;
+        inset: unset !important;
+        margin-bottom: 0.75rem !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 0.25rem !important;
+        border-radius: 0.75rem !important;
+        padding: 0.35rem 0.75rem !important;
+        align-self: flex-start !important;
+    }
+
+    /* ── Typography scale-down ── */
+    h2.text-4xl, h2.text-5xl { font-size: 1.75rem !important; }
+    h3.text-3xl, h3.text-4xl { font-size: 1.35rem !important; }
+    .text-8xl { font-size: 3.5rem !important; }
+
+    /* ── Founder card: don't scale up and break horizontal scroll ── */
+    .scale-105 {
+        transform: scale(1.01) !important;
+    }
+
+    /* ── Contributors top row: shrink minimum card width ── */
+    .min-w-\[200px\] {
+        min-width: 150px !important;
+    }
+
+    /* ── CMS sticky header: unstick on small screens ── */
+    .sticky.top-0.z-30 {
+        position: relative !important;
+        top: auto !important;
+    }
+
+    /* ── [1] Hide center nav links from TOP header on mobile ── */
+    /* (they are replaced by the fixed bottom nav bar below) */
+    /* Note: now handled by Tailwind hidden/md:flex classes on the element */
+    .lmv-top-nav-links {
+        display: none !important;
+    }
+    /* Mobile center platform name: always visible on mobile */
+    .lmv-mobile-brand {
+        display: flex !important;
+    }
+
+    /* ── [1] Add bottom padding so content is never behind the bottom nav ── */
+    .lmv-page-wrapper {
+        padding-bottom: 80px !important;
+    }
+
+    /* ── Mobile Header CSS Fix ── */
+    .navbar-brand {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        justify-content: flex-start !important;
+    }
+
+    .navbar-text {
+        display: block !important;
+        font-size: 1.1rem !important;
+        font-weight: 900 !important;
+        letter-spacing: 0.04em !important;
+        line-height: 1.1 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: 150px !important;
+    }
+}
+
+/* ============================================================
+   12. MOBILE BOTTOM NAVIGATION BAR  (≤ 768px only)
+   ============================================================ */
+.lmv-bottom-nav {
+    display: none; /* hidden on desktop */
+}
+
+@media (max-width: 768px) {
+    .lmv-bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 50;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0.5rem 0.25rem;
+        /* Glassmorphism dark bar */
+        background: rgba(0, 0, 0, 0.92);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Light mode override */
+    html:not(.dark) .lmv-bottom-nav {
+        background: rgba(255, 255, 255, 0.95);
+        border-top: 1px solid rgba(228, 228, 231, 0.8);
+        box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .lmv-bottom-nav-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        flex: 1;
+        padding: 0.35rem 0.5rem;
+        border-radius: 0.75rem;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        color: rgba(113, 113, 122, 0.85); /* inactive: muted zinc */
+    }
+
+    .lmv-bottom-nav-btn.active {
+        color: #09090b; /* true black active */
+    }
+
+    .lmv-bottom-nav-btn .lmv-nav-label {
+        font-family: 'Cairo', sans-serif;
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+    }
+
+    .lmv-bottom-nav-btn svg {
+        width: 22px;
+        height: 22px;
+        transition: transform 0.2s ease;
+    }
+
+    .lmv-bottom-nav-btn.active svg {
+        transform: scale(1.15);
+        filter: none;
+    }
+
+    .lmv-bottom-nav-btn:not(.active):active {
+        transform: scale(0.92);
+    }
+}
+
+/* ============================================================
+   13. TRUE FULLSCREEN MEDIA MODAL OVERLAY
+   ============================================================ */
+.lmv-fullscreen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.97);
+    display: flex;
+    flex-direction: column;
+}
+
+.lmv-fullscreen-overlay iframe {
+    flex: 1;
+    width: 100%;
+    border: none;
+    height: 0; /* flex will expand it */
+}
+
+.lmv-fullscreen-close-btn {
+    position: absolute;
+    top: 1rem;
+    /* Use logical property override for RTL */
+    right: 1rem;
+    z-index: 10000;
+    background: rgba(24, 24, 27, 0.9);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 1.25rem;
+    font-weight: 900;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    transition: background 0.2s, transform 0.2s;
+}
+
+[dir="rtl"] .lmv-fullscreen-close-btn {
+    right: auto;
+    left: 1rem;
+}
+
+.lmv-fullscreen-close-btn:hover {
+    background: #3f3f46;
+    transform: scale(1.1);
+}
+
+/* ============================================================
+   14. QUIZ SIDE DRAWER (Nano Banana frosted glass)
+   ============================================================ */
+@keyframes quizDrawerSlideIn {
+    from { transform: translateX(100%); opacity: 0.5; }
+    to   { transform: translateX(0);    opacity: 1;   }
+}
+[dir="rtl"] .quiz-side-drawer {
+    animation: quizDrawerSlideInRTL 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+[dir="ltr"] .quiz-side-drawer {
+    animation: quizDrawerSlideIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes quizDrawerSlideInRTL {
+    from { transform: translateX(-100%); opacity: 0.5; }
+    to   { transform: translateX(0);     opacity: 1;   }
+}
+
+/* Mobile: slightly wider drawer */
+@media (max-width: 768px) {
+    .quiz-side-drawer {
+        width: 85vw !important;
+        max-width: 340px !important;
+    }
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luminova Edu</title>
+    <!-- وسوم لمنع الكاش (Cache Busting Strategy) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Tailwind CSS (CDN for zero-build static) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            DEFAULT: '#06b6d4', // Cyan 500
+                            hover: '#0891b2',   // Cyan 600
+                            dark: '#1e293b',    // Slate 800
+                            gold: '#fbbf24',    // Amber 400
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- React and ReactDOM -->
+    <script src="js/libs/react.development.js"></script>
+    <script src="js/libs/react-dom.development.js"></script>
+
+    <!-- HTM (Hyperscript Tagged Markup) -->
+    <!-- Native replacement for Babel/JSX to prevent CORS errors -->
+    <script src="js/libs/htm.umd.js"></script>
+
+    <!-- Data (Loaded natively as window.LUMINOVA_DATA / window.initialData) -->
+    <!-- كسر الكاش الخارجي (External Cache Busting) -->
+    <script>
+        document.write('<script src="data.js?v=' + Date.now() + '"><\\/script>');
+    </script>
+
+    <!-- عكس أولوية البيانات (Internal Cache Fix & Single Source of Truth) -->
+    <!-- يتم تنفيذ هذا المقطع مرة واحدة فقط لحظة تحميل الصفحة لتنظيف أي بيانات سابقة -->
+    <script>
+        // الاعتماد الحصري على كود السيرفر (data.js) ومسح أي كاش قديم
+        localStorage.removeItem('luminova_data');
+    </script>
+
+</head>
+
+<body class="antialiased min-h-screen">
+
+    <div id="root"></div>
+
+    <!-- Application Logic -->
+    <script src="app.js?v=999"></script>
+    <script src="js/services/gas-service.js?v=999"></script>
+    <script src="js/pages/html-viewer.js?v=999"></script>
+
+</body>
+
+</html>
