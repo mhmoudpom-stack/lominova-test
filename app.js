@@ -520,8 +520,8 @@
             ${isOpen && html`
                 <div className="absolute top-full left-0 right-0 mt-3 z-[999] animate-fade-in backdrop-blur-3xl bg-[#0A0514]/95 border border-white/10 rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.6)] overflow-hidden max-h-[300px] overflow-y-auto">
                     <ul className="py-2 flex flex-col m-0 p-0">
-                        ${options.map(opt => html`
-                            <li key=${opt.value} 
+                        ${options.map((opt, idx) => html`
+                            <li key=${opt.value || `opt-${idx}`} 
                                 onClick=${() => { onChange(opt.value); setIsOpen(false); }}
                                 className=${`px-5 py-4 cursor-pointer transition-colors font-bold border-b border-white/5 last:border-none ${String(value) === String(opt.value) ? 'bg-rose-500/20 text-rose-400' : 'text-zinc-400 hover:bg-white/[0.05] hover:text-white'}`}
                             >
@@ -783,8 +783,8 @@
                     <p className="font-black tracking-tighter" style=${{
                         fontSize: '4.5rem',
                         background: 'linear-gradient(to bottom right, #fb7185, #e879f9, #818cf8)',
-                        webkitBackgroundClip: 'text',
-                        webkitTextFillColor: 'transparent',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
                         backgroundClip: 'text',
                         margin: 0,
                         lineHeight: 0.9,

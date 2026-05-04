@@ -308,58 +308,50 @@
                 };
 
                 return html`
-                    <div className="absolute inset-0 bg-[#0A0514]"></div>
-                    <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
-                    <div className="absolute bottom-0 left-0 w-80 h-80 bg-fuchsia-500/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2"></div>
-                    <div className="relative z-10 max-w-lg w-full bg-white/[0.03] backdrop-blur-2xl rounded-[2.5rem] shadow-2xl p-10 animate-fade-in border border-white/10">
+                <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-zinc-950">
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                    <div className="absolute bottom-0 left-0 w-80 h-80 bg-fuchsia-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+                    <div className="relative z-10 max-w-lg w-full bg-zinc-900/50 backdrop-blur-2xl rounded-3xl shadow-2xl p-10 animate-fade-in border border-white/10">
                         <div className="text-center mb-8">
-                            <div className="text-7xl mb-4">📋</div>
-                            <h2 className="text-3xl font-black mb-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+                            <div className="text-7xl mb-4 text-white">📋</div>
+                            <h2 className="text-3xl font-black mb-2 text-white">
                                 ${lang === 'ar' ? 'تعليمات الامتحان' : 'Exam Instructions'}
                             </h2>
-                            <p className="text-sm font-bold text-fuchsia-100/40">
+                            <p className="text-sm font-bold text-gray-400">
                                 ${lang === 'ar' ? 'يرجى قراءة التعليمات بعناية قبل البدء' : 'Please read the instructions carefully before starting'}
                             </p>
                         </div>
-
-                        <div className="space-y-4 mb-8">
-                            <div className="flex items-start gap-3 p-4 rounded-2xl bg-white/10 dark:bg-gray-800/40 border border-white/10">
+                        <div className="space-y-4 mb-8 text-white">
+                            <div className="flex items-start gap-3 p-4 rounded-2xl bg-white/5 border border-white/10">
                                 <span className="text-2xl mt-0.5">⏱️</span>
-                                <p className="text-sm font-bold text-gray-700 dark:text-gray-300 leading-relaxed">
+                                <p className="text-sm font-bold text-gray-300 leading-relaxed">
                                     ${lang === 'ar'
-                                    ? quiz.endTime
-                                        ? 'الامتحان محدد بوقت. سيتم تسليم إجاباتك تلقائياً عند انتهاء الوقت.'
-                                        : 'لا يوجد حد زمني لهذا الامتحان.'
-                                    : quiz.endTime
-                                        ? 'This exam is timed. Your answers will be auto-submitted when time runs out.'
-                                        : 'There is no time limit for this exam.'}
+                                    ? (quiz.endTime ? 'الامتحان محدد بوقت. سيتم تسليم إجاباتك تلقائياً عند انتهاء الوقت.' : 'لا يوجد حد زمني لهذا الامتحان.')
+                                    : (quiz.endTime ? 'This exam is timed. Your answers will be auto-submitted when time runs out.' : 'There is no time limit for this exam.')}
                                 </p>
                             </div>
-                            <div className="flex items-start gap-3 p-4 rounded-2xl bg-red-500/5 dark:bg-red-900/20 border border-red-500/20">
+                            <div className="flex items-start gap-3 p-4 rounded-2xl bg-red-500/10 border border-red-500/20">
                                 <span className="text-2xl mt-0.5">🚫</span>
-                                <p className="text-sm font-bold text-gray-700 dark:text-gray-300 leading-relaxed">
+                                <p className="text-sm font-bold text-gray-300 leading-relaxed">
                                     ${lang === 'ar'
                                     ? 'نظام مراقبة إلكتروني مفعّل. مغادرة شاشة الامتحان (تبديل التطبيقات أو النوافذ) ستمنحك إنذاراً واحداً فقط. عند التكرار، سيتم سحب الامتحان وتسليمه تلقائياً.'
                                     : 'Electronic proctoring is active. Switching tabs or apps will give you ONE warning only. A second violation will auto-submit and terminate your exam.'}
                                 </p>
                             </div>
-                            <div className="flex items-start gap-3 p-4 rounded-2xl bg-white/10 dark:bg-gray-800/40 border border-white/10">
+                            <div className="flex items-start gap-3 p-4 rounded-2xl bg-white/5 border border-white/10">
                                 <span className="text-2xl mt-0.5">📝</span>
-                                <p className="text-sm font-bold text-gray-700 dark:text-gray-300 leading-relaxed">
+                                <p className="text-sm font-bold text-gray-300 leading-relaxed">
                                     ${lang === 'ar'
                                     ? 'لا يمكنك إعادة الامتحان بعد التسليم. تأكد من مراجعة إجاباتك قبل الضغط على زر الإنهاء.'
                                     : 'You cannot retake the exam after submission. Make sure to review your answers before finishing.'}
                                 </p>
                             </div>
                         </div>
-
-                        <button onClick=${startExamNow}
-                            className="w-full py-4 rounded-2xl font-black text-xl text-white shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98] bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+                        <button onClick=${startExamNow} className="w-full py-4 rounded-2xl font-black text-xl text-white bg-blue-600 hover:bg-blue-700 shadow-xl transition-all hover:scale-[1.02]">
                             ${lang === 'ar' ? '🚀 ابدأ الامتحان الآن' : '🚀 Start Exam Now'}
                         </button>
                     </div>
-                </div>
-                `;
+                </div>`;
             }
 
             const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(studentInfo.email);
@@ -412,93 +404,82 @@
                 timeMsg = lang === 'ar' ? 'عذراً، لقد انتهى موعد الاختبار' : 'Sorry, the exam has ended';
             }
 
-            return html`
-            <div className="min-h-screen flex items-center justify-center bg-[#0A0514] p-4 relative overflow-hidden">
-                <button onClick=${goBack} className="absolute top-6 left-6 sm:left-10 z-50 bg-white/[0.03] backdrop-blur-2xl hover:bg-white/[0.06] text-white px-6 py-3 rounded-2xl font-black shadow-lg transition-all flex items-center gap-2 border border-white/10 hover:scale-105">
-                    <span className="text-xl">🔙</span> ${lang === 'ar' ? 'الخروج' : 'Back'}
-                </button>
-                <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
-                <div className="absolute bottom-0 left-0 w-80 h-80 bg-fuchsia-500/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2"></div>
-                <div className="relative z-10 max-w-lg w-full bg-white/[0.03] backdrop-blur-2xl border border-white/10 p-8 rounded-[2.5rem] shadow-2xl">
-                    <div className="text-center mb-8">
-                        <div className="text-6xl mb-4">🎓</div>
-                        <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 mb-2">${quiz.titleAr || quiz.title || quiz.titleEn}</h2>
-                        <p className="text-fuchsia-100/60 font-bold opacity-80">${lang === 'ar' ? 'بوابة الدخول للاختبار التقييمي' : 'Evaluation Exam Gateway'}</p>
-                    </div>
-
-                    ${timeStatus === 'early' ? html`
-                        <div className="text-center p-6 bg-cyan-500/10 rounded-2xl border border-cyan-500/30 mb-6">
-                            <div className="text-4xl font-black text-cyan-400 mb-2 tabular-nums">${timeMsg}</div>
-                            <p className="text-sm opacity-70 font-bold">يرجى الانتظار، سيتم التفعيل تلقائياً</p>
-                        </div>
-                    ` : timeStatus === 'late' ? html`
-                        <div className="text-center p-6 bg-red-500/10 rounded-2xl border border-red-500/30 mb-6">
+            let gatewayContent;
+            if (timeStatus === 'early') {
+                gatewayContent = html`
+                    <div className="text-center p-6 bg-cyan-500/10 rounded-2xl border border-cyan-500/30 mb-6">
+                        <div className="text-4xl font-black text-cyan-400 mb-2 tabular-nums">${timeMsg}</div>
+                        <p className="text-sm opacity-70 font-bold text-white">يرجى الانتظار، سيتم التفعيل تلقائياً</p>
+                    </div>`;
+            } else if (timeStatus === 'late') {
+                gatewayContent = html`
+                    <div className="w-full space-y-4">
+                        <div className="text-center p-6 bg-red-500/10 rounded-2xl border border-red-500/30">
                             <div className="text-2xl font-black text-red-500 mb-2">🚫 ${timeMsg}</div>
                         </div>
                         <div className="text-center">
-                            <${Luminova.Components.Button} onClick=${goBack}>${lang === 'ar' ? 'العودة' : 'Go Back'}</${Luminova.Components.Button}>
+                            <button onClick=${goBack} className="w-full py-4 bg-zinc-800 text-white rounded-xl font-bold">${lang === 'ar' ? 'العودة' : 'Go Back'}</button>
                         </div>
-                    ` : gatewayError === 'exists' ? html`
-                        <div className="text-center p-10 rounded-3xl mb-6 animate-fade-in relative overflow-hidden" style=${{ background: 'rgba(127,29,29,0.08)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: '2px solid rgba(239,68,68,0.25)', boxShadow: '0 8px 32px rgba(239,68,68,0.15), inset 0 0 80px rgba(239,68,68,0.03)' }}>
-                            <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-orange-500/5 pointer-events-none"></div>
-                            <div className="relative z-10">
-                                <div className="text-8xl mb-6 animate-pulse" style=${{ filter: 'drop-shadow(0 0 20px rgba(239,68,68,0.4))' }}>🔒</div>
-                                <h2 className="text-3xl font-black mb-3" style=${{ background: 'linear-gradient(135deg, #ef4444, #f97316)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                                    ${lang === 'ar' ? 'عفواً، لا يمكنك الدخول' : 'Sorry, You Cannot Enter'}
-                                </h2>
-                                <p className="text-base font-bold text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-sm mx-auto">
-                                    ${lang === 'ar'
-                                ? 'بياناتك (الاسم، أو رقم الجلوس، أو البريد الإلكتروني) مسجلة مسبقاً في هذا الامتحان. لقد قمت بالتسجيل من قبل.'
-                                : 'Your information (name, seat number, or email) is already registered for this exam. You have already submitted.'}
-                                </p>
-                                <div className="space-y-3">
-                                    <button onClick=${() => { setGatewayError(null); setDebugError(null); }}
-                                        className="w-full py-4 rounded-2xl font-black text-lg text-white shadow-xl transition-all hover:scale-[1.02]" 
-                                        style=${{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', boxShadow: '0 10px 30px -10px rgba(245,158,11,0.6)' }}>
-                                        ${lang === 'ar' ? '🔄 رجوع وتعديل البيانات' : '🔄 Back to Edit Info'}
-                                    </button>
-                                    <button onClick=${goBack}
-                                        className="w-full py-3.5 rounded-2xl font-black text-base bg-gray-200/80 dark:bg-gray-700/80 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-all">
-                                        ${lang === 'ar' ? 'العودة لصفحة المواد' : 'Return to Subjects'}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ` : gatewayError === 'network_error' ? html`
-                        <div className="text-center p-8 bg-orange-900/10 rounded-3xl border border-orange-500/30 mb-6 animate-fade-in">
-                            <div className="text-7xl mb-6">📡</div>
-                            <h2 className="text-2xl font-black text-orange-600 dark:text-orange-500 mb-4">
-                                ${lang === 'ar' ? 'فشل الاتصال بالخادم' : 'Connection Error'}
-                            </h2>
-                            <p className="text-base font-bold text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-                                ${lang === 'ar' ? 'حدثت مشكلة في الاتصال أثناء التحقق من بياناتك. يرجى التأكد من الإنترنت والمحاولة مرة أخرى.' : 'There was a connection issue verifying your data. Please check your internet and try again.'}
-                            </p>
-                            ${debugError && html`<div className="p-3 mb-6 bg-red-100 text-red-800 rounded-xl text-xs font-mono text-left break-words border border-red-300">${debugError}</div>`}
-                            <${Luminova.Components.Button} onClick=${() => { setGatewayError(null); setDebugError(null); }} className="w-full py-4 rounded-2xl font-black bg-orange-600 hover:bg-orange-700 text-white shadow-xl shadow-orange-600/30 transition-all text-lg mb-3">
-                                ${lang === 'ar' ? 'إعادة المحاولة' : 'Try Again'}
-                            </${Luminova.Components.Button}>
-                            <${Luminova.Components.Button} variant="secondary" onClick=${goBack} className="w-full py-4 rounded-2xl font-black transition-all text-lg">
-                                ${lang === 'ar' ? 'العودة لصفحة المواد' : 'Return to Subjects'}
-                            </${Luminova.Components.Button}>
-                        </div>
-                    ` : html`
-                        <div className="space-y-4">
-                            <${Luminova.Components.Input} label=${lang === 'ar' ? 'الاسم الرباعي' : 'Full Name'} val=${studentInfo.name} onChange=${v => setStudentInfo({ ...studentInfo, name: v })} />
-                            <${Luminova.Components.Input} label=${lang === 'ar' ? 'رقم الجلوس' : 'Seat Number'} val=${studentInfo.seatNumber} onChange=${v => setStudentInfo({ ...studentInfo, seatNumber: v })} />
-                            <${Luminova.Components.Input} label=${lang === 'ar' ? 'الشعبة / القسم' : 'Department'} val=${studentInfo.department} onChange=${v => setStudentInfo({ ...studentInfo, department: v })} />
-                            <${Luminova.Components.Input} label=${lang === 'ar' ? 'البريد الإلكتروني' : 'Email'} val=${studentInfo.email} onChange=${v => setStudentInfo({ ...studentInfo, email: v })} />
-                            
-                            <button 
-                                disabled=${!isFormValid || isVerifying}
-                                onClick=${verifyAndStart}
-                                className="w-full py-4 mt-6 rounded-2xl font-black text-xl text-white bg-gradient-to-r from-cyan-400 to-fuchsia-500 shadow-lg transition-transform disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.02]">
-                                ${isVerifying ? (lang === 'ar' ? '⏳ جاري التحقق من السجلات...' : '⏳ Verifying records...') : (lang === 'ar' ? 'بدء الاختبار' : 'Start Exam')}
+                    </div>`;
+            } else if (gatewayError === 'exists') {
+                gatewayContent = html`
+                    <div className="w-full text-center p-8 rounded-3xl mb-6 bg-red-500/5 border border-red-500/20">
+                        <div className="text-7xl mb-4 text-white">🔒</div>
+                        <h2 className="text-2xl font-black text-red-500 mb-3">${lang === 'ar' ? 'عفواً، لا يمكنك الدخول' : 'Access Denied'}</h2>
+                        <p className="text-sm font-bold text-gray-400 mb-6 leading-relaxed">
+                            ${lang === 'ar' ? 'بياناتك مسجلة مسبقاً في هذا الامتحان.' : 'You have already submitted this exam.'}
+                        </p>
+                        <div className="space-y-3">
+                            <button onClick=${() => { setGatewayError(null); setDebugError(null); }} className="w-full py-3 rounded-xl font-bold bg-amber-600 text-white">
+                                ${lang === 'ar' ? '🔄 تعديل البيانات' : '🔄 Edit Info'}
+                            </button>
+                            <button onClick=${goBack} className="w-full py-3 rounded-xl font-bold bg-gray-700 text-white">
+                                ${lang === 'ar' ? 'العودة' : 'Go Back'}
                             </button>
                         </div>
-                    `}
+                    </div>`;
+            } else if (gatewayError === 'network_error') {
+                gatewayContent = html`
+                    <div className="w-full text-center p-8 bg-orange-900/10 rounded-3xl border border-orange-500/30 mb-6">
+                        <div className="text-7xl mb-4 text-white">📡</div>
+                        <h2 className="text-xl font-black text-orange-500 mb-2">${lang === 'ar' ? 'فشل الاتصال' : 'Connection Error'}</h2>
+                        <p className="text-sm text-gray-400 mb-6">${debugError || 'Network issues detected.'}</p>
+                        <button onClick=${() => { setGatewayError(null); setDebugError(null); }} className="w-full py-3 bg-orange-600 text-white rounded-xl mb-3">
+                            ${lang === 'ar' ? 'إعادة المحاولة' : 'Try Again'}
+                        </button>
+                        <button onClick=${goBack} className="w-full py-3 bg-zinc-800 text-white rounded-xl">
+                            ${lang === 'ar' ? 'العودة' : 'Go Back'}
+                        </button>
+                    </div>`;
+            } else {
+                gatewayContent = html`
+                    <div className="space-y-4">
+                        <${Luminova.Components.Input} label=${lang === 'ar' ? 'الاسم الرباعي' : 'Full Name'} val=${studentInfo.name} onChange=${v => setStudentInfo({ ...studentInfo, name: v })} />
+                        <${Luminova.Components.Input} label=${lang === 'ar' ? 'رقم الجلوس' : 'Seat Number'} val=${studentInfo.seatNumber} onChange=${v => setStudentInfo({ ...studentInfo, seatNumber: v })} />
+                        <${Luminova.Components.Input} label=${lang === 'ar' ? 'الشعبة / القسم' : 'Department'} val=${studentInfo.department} onChange=${v => setStudentInfo({ ...studentInfo, department: v })} />
+                        <${Luminova.Components.Input} label=${lang === 'ar' ? 'البريد الإلكتروني' : 'Email'} val=${studentInfo.email} onChange=${v => setStudentInfo({ ...studentInfo, email: v })} />
+                        <button disabled=${!isFormValid || isVerifying} onClick=${verifyAndStart} className="w-full py-4 mt-6 rounded-2xl font-black text-xl text-white bg-blue-600 shadow-lg transition-transform disabled:opacity-50 hover:scale-[1.02]">
+                            ${isVerifying ? (lang === 'ar' ? '⏳ جاري التحقق...' : '⏳ Verifying...') : (lang === 'ar' ? 'بدء الاختبار' : 'Start Exam')}
+                        </button>
+                    </div>`;
+            }
+
+            return html`
+            <div className="min-h-screen flex items-center justify-center bg-zinc-950 p-4 relative overflow-hidden">
+                <button onClick=${goBack} className="absolute top-6 left-6 sm:left-10 z-50 bg-white/5 backdrop-blur-2xl hover:bg-white/10 text-white px-6 py-3 rounded-2xl font-black shadow-lg transition-all flex items-center gap-2 border border-white/10 hover:scale-105">
+                    <span className="text-xl text-white">🔙</span> ${lang === 'ar' ? 'الخروج' : 'Back'}
+                </button>
+                <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                <div className="absolute bottom-0 left-0 w-80 h-80 bg-fuchsia-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+                <div className="relative z-10 max-w-lg w-full bg-zinc-900/50 backdrop-blur-2xl border border-white/10 p-8 rounded-3xl shadow-2xl">
+                    <div className="text-center mb-8">
+                        <div className="text-6xl mb-4 text-white">🎓</div>
+                        <h2 className="text-3xl font-black text-white mb-2">${quiz.titleAr || quiz.title || quiz.titleEn}</h2>
+                        <p className="text-gray-400 font-bold">${lang === 'ar' ? 'بوابة الدخول للاختبار التقييمي' : 'Evaluation Exam Gateway'}</p>
+                    </div>
+                    ${gatewayContent}
                 </div>
-            </div>
-            `;
+            </div>`;
         }
 
         const q = questions[currentIndex];

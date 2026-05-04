@@ -17,12 +17,12 @@ Luminova.Components.TimelineFeed = ({ items, students, subjects, lang, onQuizCli
 
         return html`
         <div className="space-y-6 relative border-s border-zinc-200 dark:border-zinc-800 ml-3 mr-3 px-4">
-            ${visibleItems.map(item => {
+            ${visibleItems.map((item, idx) => {
             const student = Luminova.getStudent(item.studentId, students);
             const subject = subjects.find(s => s.id === item.subjectId) || {};
             const isQuizItem = item.isSingleQuestion;
             return html`
-                    <div key=${item.id} className="relative">
+                    <div key=${item.id || `feed-${idx}`} className="relative">
                         <span className="absolute flex items-center justify-center w-9 h-9 bg-fuchsia-500/10 text-fuchsia-400 border border-fuchsia-500/20 rounded-full -start-[18px] ring-8 ring-[#0A0514] mt-2 shadow-[0_0_15px_rgba(217,70,239,0.2)] z-10 transition-transform hover:scale-110">
                             ${isQuizItem ? Luminova.Icons.CheckCircle() : Luminova.Icons.Book()}
                         </span>
@@ -202,7 +202,7 @@ Luminova.Components.TimelineFeed = ({ items, students, subjects, lang, onQuizCli
                     <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 text-zinc-900 dark:text-white">${Luminova.i18n[lang].topContributors}</h2>
                     <div className="flex gap-4 overflow-x-auto pb-4 snap-x">
                         ${topContributors.map((c, i) => html`
-                            <${Luminova.Components.GlassCard} key=${c.student.id} className="min-w-[220px] flex-shrink-0 text-center flex flex-col items-center snap-center border-b-4 border-b-fuchsia-500/50 hover:border-b-cyan-400 transition-all duration-500 p-8">
+                            <${Luminova.Components.GlassCard} key=${c.student.id || `contributor-${i}`} className="min-w-[220px] flex-shrink-0 text-center flex flex-col items-center snap-center border-b-4 border-b-fuchsia-500/50 hover:border-b-cyan-400 transition-all duration-500 p-8">
                                 <div className="absolute top-3 right-3 text-2xl font-black opacity-10 italic">#${i + 1}</div>
                                 <${Luminova.Components.Avatar} name=${c.student.nameAr || c.student.name} image=${c.student.image} isVIP=${c.student.isVIP} isFounder=${c.student.isFounder || c.student.id === 's_founder'} isVerified=${c.student.isVerified} size="w-20 h-20 mb-4 shadow-xl shadow-fuchsia-500/10" />
                                 <h3 className="font-black text-base text-white">${lang === 'ar' ? (c.student.nameAr || c.student.name) : (c.student.nameEn || c.student.name)}</h3>
@@ -535,15 +535,16 @@ Luminova.Components.TimelineFeed = ({ items, students, subjects, lang, onQuizCli
                                 <div className="absolute top-full left-0 right-0 mt-3 z-[100] animate-fade-in backdrop-blur-3xl bg-zinc-950/95 border border-zinc-800 rounded-3xl shadow-2xl overflow-hidden min-w-[200px]">
                                     <ul className="py-2 max-h-[300px] overflow-y-auto m-0 p-0">
                                         <li 
+                                            key="all-authors"
                                             onClick=${() => { setSelectedAuthor(null); setIsAuthorOpen(false); }}
                                             className=${`px-6 py-4 cursor-pointer transition-all flex items-center justify-between font-bold ${!selectedAuthor ? 'text-white bg-white/10' : 'text-zinc-500 hover:bg-white/5 hover:text-white'}`}
                                         >
                                             <span>${lang === 'ar' ? 'الجميع' : 'All Authors'}</span>
                                             ${!selectedAuthor && html`<span className="text-rose-400">✓</span>`}
                                         </li>
-                                        ${authors.map(author => html`
+                                        ${authors.map((author, idx) => html`
                                             <li 
-                                                key=${author}
+                                                key=${author || `author-${idx}`}
                                                 onClick=${() => { setSelectedAuthor(author); setIsAuthorOpen(false); }}
                                                 className=${`px-6 py-4 cursor-pointer transition-all flex items-center justify-between font-bold ${selectedAuthor === author ? 'text-white bg-white/10' : 'text-zinc-500 hover:bg-white/5 hover:text-white'}`}
                                             >
@@ -585,8 +586,8 @@ Luminova.Components.TimelineFeed = ({ items, students, subjects, lang, onQuizCli
                         ` : html`
                             <div className="bg-zinc-900/40 backdrop-blur-xl rounded-3xl p-6 border border-zinc-800 shadow-sm">
                                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                                    ${filteredQuizzes.map(q => html`
-                                        <${Luminova.Components.GlassCard} key=${q.id} className="border-t-2 border-t-rose-500/50 hover:scale-[1.02] transition-transform shadow-md hover:shadow-xl flex flex-col h-full">
+                                    ${filteredQuizzes.map((q, idx) => html`
+                                        <${Luminova.Components.GlassCard} key=${q.id || `quiz-${idx}`} className="border-t-2 border-t-rose-500/50 hover:scale-[1.02] transition-transform shadow-md hover:shadow-xl flex flex-col h-full">
                                             ${q.publisherId && html`
                                                 <div className="flex items-center gap-3 mb-4 bg-zinc-50 dark:bg-zinc-800/80 p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 w-fit shrink-0">
                                                     <${Luminova.Components.Avatar} name=${Luminova.getStudent(q.publisherId, data.students).nameAr || Luminova.getStudent(q.publisherId, data.students).name} image=${Luminova.getStudent(q.publisherId, data.students).image} isVIP=${Luminova.getStudent(q.publisherId, data.students).isVIP} isFounder=${Luminova.getStudent(q.publisherId, data.students).isFounder || q.publisherId === 's_founder_hardcoded'} isVerified=${Luminova.getStudent(q.publisherId, data.students).isVerified} size="w-8 h-8" />
@@ -649,8 +650,8 @@ Luminova.Components.TimelineFeed = ({ items, students, subjects, lang, onQuizCli
 
                 ${subjects.length > 0 ? html`
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-2">
-                        ${subjects.map(s => html`
-                            <button key=${s.id} onClick=${() => setSelectedSub(s)} 
+                        ${subjects.map((s, idx) => html`
+                            <button key=${s.id || `subject-${idx}`} onClick=${() => setSelectedSub(s)} 
                                 className="group relative bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-3xl p-8 text-start flex flex-col justify-between min-h-[200px] shadow-sm hover:shadow-[0_0_30px_rgba(217,70,239,0.15)] transition-all duration-500 hover:-translate-y-2 overflow-hidden">
                                 <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-cyan-400 to-fuchsia-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                 
@@ -871,9 +872,9 @@ Luminova.Pages.StudentCommunityPage = ({ data, lang, setView, setActiveSummary }
              </div>
              
              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                ${allStudentsList.slice(0, studentsVisibleCount).map((student) => html`
+                ${allStudentsList.slice(0, studentsVisibleCount).map((student, idx) => html`
                     <${Luminova.Components.GlassCard} 
-                        key=${student.id} 
+                        key=${student.id || `student-${idx}`} 
                         onClick=${() => { setSelectedStudent(student); setVisibleCount(5); }} 
                         className=${`text-center flex flex-col items-center ${student.isFounder || student.id === 's_founder_hardcoded' ? 'scale-105 relative z-10 bg-zinc-50 dark:bg-zinc-950 border-2 border-zinc-300 dark:border-zinc-700 shadow-md text-zinc-900 dark:text-zinc-100' : student.isVIP ? 'bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm' : ''}`}
                     >
